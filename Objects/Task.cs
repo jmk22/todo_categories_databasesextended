@@ -142,5 +142,41 @@ namespace ToDoList
       }
       return foundTask;
     }
+
+    public void Update(string newDescription)
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("UPDATE tasks SET description = @NewDescription OUTPUT INSERTED.description WHERE id = @TaskId;", conn);
+
+      SqlParameter newDescriptionParameter = new SqlParameter();
+      newDescriptionParameter.ParameterName = "@NewDescription";
+      newDescriptionParameter.Value = newDescription;
+      cmd.Parameters.Add(newDescriptionParameter);
+
+      SqlParameter taskIdParameter = new SqlParameter();
+      taskIdParameter.ParameterName = "@TaskId";
+      taskIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(taskIdParameter);
+
+      rdr = cmd.ExecuteReader();
+
+      while(rdr.Read())
+      {
+        this.description = rdr.GetString(0);
+      }
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
   }
 }

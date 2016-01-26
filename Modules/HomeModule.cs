@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 using Nancy;
 using Nancy.ViewEngines.Razor;
 
@@ -40,8 +41,11 @@ namespace ToDoList
               return View["tasks_form.cshtml", AllCategories];
             };
             Post["/tasks/new"] = _ => {
-              Task newTask = new Task(Request.Form["task-description"], Request.Form["category-id"]);
+              Task newTask = new Task(Request.Form["task-description"]);
               newTask.Save();
+              Category taskCategory = new Category(Request.Form["category-id"]);
+              Console.WriteLine("taskCategory: {0}", taskCategory.GetName());
+              taskCategory.AddTask(newTask);
               return View["success.cshtml"];
             };
 
@@ -63,6 +67,13 @@ namespace ToDoList
               model.Add("category", SelectedCategory);
               model.Add("tasks", CategoryTasks);
               return View["category.cshtml", model];
+            };
+
+            //View specific task
+            Get["tasks/{id}"] = parameters => {
+              Dictionary<string, object> model = new Dictionary<string, object>();
+              Task SelectedTask = Task.Find(parameters.id);
+              return View["task.cshtml", SelectedTask];
             };
 
             //Edit specific category

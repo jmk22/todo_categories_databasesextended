@@ -12,7 +12,7 @@
     } else {
       <ol>
       @foreach (var task in @Model["tasks"]) {
-        <li>@task.GetDescription()</li>
+        <li><a href="/tasks/@task.GetId()">@task.GetDescription()</a></li>
       }
       </ol>
       <p><a href='/tasks/new'>Add a new task</a></p>
