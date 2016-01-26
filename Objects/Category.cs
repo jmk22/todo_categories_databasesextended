@@ -28,6 +28,7 @@ namespace ToDoList
           return (idEquality && nameEquality);
         }
     }
+    
     public int GetId()
     {
       return id;
@@ -155,38 +156,6 @@ namespace ToDoList
       return foundCategory;
     }
 
-    // public List<Task> GetTasks()
-    // {
-    //   SqlConnection conn = DB.Connection();
-    //   SqlDataReader rdr = null;
-    //   conn.Open();
-    //
-    //   SqlCommand cmd = new SqlCommand("SELECT * FROM tasks WHERE categoryId = @CategoryId;", conn);
-    //   SqlParameter categoryIdParameter = new SqlParameter();
-    //   categoryIdParameter.ParameterName = "@CategoryId";
-    //   categoryIdParameter.Value = this.GetId();
-    //   cmd.Parameters.Add(categoryIdParameter);
-    //
-    //   rdr = cmd.ExecuteReader();
-    //
-    //   List<Task> tasks = new List<Task> {};
-    //   while(rdr.Read())
-    //   {
-    //     int taskId = rdr.GetInt32(0);
-    //     string taskDescription = rdr.GetString(1);
-    //     Task newTask = new Task(taskDescription, taskId);
-    //     tasks.Add(newTask);
-    //   }
-    //   if (rdr != null)
-    //   {
-    //     rdr.Close();
-    //   }
-    //   if (conn != null)
-    //   {
-    //     conn.Close();
-    //   }
-    //   return tasks;
-    // }
     public void AddTask(Task newTask)
     {
       SqlConnection conn = DB.Connection();
