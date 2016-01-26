@@ -252,7 +252,6 @@ namespace ToDoList
         {
               int thisTaskId = queryReader.GetInt32(0);
               string taskDescription = queryReader.GetString(1);
-              Console.WriteLine("Here's what comes out of the while loop: {0}, {1}", thisTaskId, taskDescription);
               Task foundTask = new Task(taskDescription, thisTaskId);
               tasks.Add(foundTask);
         }
@@ -261,7 +260,6 @@ namespace ToDoList
           queryReader.Close();
         }
       }
-
       if (conn != null)
       {
         conn.Close();
